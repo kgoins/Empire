@@ -1322,12 +1322,13 @@ class Agents:
             self.mainMenu.agents.update_agent_sysinfo_db(sessionID, listener=listenerName, internal_ip=internal_ip, username=username, hostname=hostname, os_details=os_details, high_integrity=high_integrity, process_name=process_name, process_id=process_id, language_version=language_version, language=language)
 
             # signal to Slack that this agent is now active
-            
+            slackAPIHandle = listenerName['SlackAPIHandle']['Value']
             slackToken = listenerOptions['SlackToken']['Value']
+
             slackChannel = listenerOptions['SlackChannel']['Value']
-            if slackToken != "":
+            if slackToken or slackAPIHandle:
                 slackText = ":biohazard: NEW AGENT :biohazard:\r\n```Machine Name: %s\r\nInternal IP: %s\r\nExternal IP: %s\r\nUser: %s\r\nOS Version: %s\r\nAgent ID: %s```" % (hostname,internal_ip,external_ip,username,os_details,sessionID)
-                helpers.slackMessage(slackToken,slackChannel,slackText)
+                helpers.slackMessage(slackAPIHandle, slackToken, slackChannel, slackText)
             
 	        # signal everyone that this agent is now active
             dispatcher.send("[+] Initial agent %s from %s now active (Slack)" % (sessionID, clientIP), sender='Agents')

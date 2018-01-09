@@ -56,6 +56,7 @@ from time import localtime, strftime
 import subprocess
 import fnmatch
 import urllib, urllib2
+import json
 
 ###############################################################
 #
@@ -907,8 +908,26 @@ class KThread(threading.Thread):
     def kill(self):
         self.killed = True
 
-def slackMessage(slackToken, slackChannel, slackText):
-	url = "https://slack.com/api/chat.postMessage"
-	data = urllib.urlencode({'token': slackToken, 'channel':slackChannel, 'text':slackText})
- 	req = urllib2.Request(url, data)
- 	resp = urllib2.urlopen(req)
+def slackMessage(slackAPIHandle, slackToken, slackChannel, slackText):
+    url = ''
+    req = None
+
+    if slackAPIHandle:
+        url = slackAPIHandle
+        messageJson = {
+            'username': 'empire',
+            'text': slackText,
+            'channel': slackChannel
+        }
+
+        messageJsonStr = json.dumps(messageJson)
+        req = urllib2.Reques(url, messageJsonStr, {'Content-Type': 'application/json'})
+
+    else:
+        url = "https://slack.com/api/chat.postMessage"
+        data = urllib.urlencode({'token': slackToken, 'channel':slackChannel, 'text':slackText})
+        req = urllib2.Request(url, data)
+
+    resp = urllib2.urlopen(req)
+
+

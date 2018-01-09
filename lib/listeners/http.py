@@ -130,6 +130,11 @@ class Listener:
                 'Required'      :   False,
                 'Value'         :   'default'
             },
+            'SlackAPIHandle': {
+                'Description'   :   'Your SlackBot API Url for slack service hook calls',
+                'Required'      :   False,
+                'Value'         :   ''
+            },
             'SlackToken' : {
                 'Description'   :   'Your SlackBot API token to communicate with your Slack instance.',
                 'Required'      :   False,
