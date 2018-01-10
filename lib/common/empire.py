@@ -81,7 +81,7 @@ class MainMenu(cmd.Cmd):
         time.sleep(1)
 
         # pull out some common configuration information
-        (self.isroot, self.installPath, self.ipWhiteList, self.ipBlackList, self.obfuscate, self.obfuscateCommand) = helpers.get_config('rootuser, install_path,ip_whitelist,ip_blacklist,obfuscate,obfuscate_command')
+        (self.isroot, self.installPath, self.ipWhiteList, self.ipBlackList, self.obfuscate, self.obfuscateCommand) = helpers.get_config('rootuser,install_path,ip_whitelist,ip_blacklist,obfuscate,obfuscate_command')
 
         # change the default prompt for the user
         self.prompt = '(Empire) > '
