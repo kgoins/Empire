@@ -921,7 +921,7 @@ def slackMessage(slackAPIHandle, slackToken, slackChannel, slackText):
         }
 
         messageJsonStr = json.dumps(messageJson)
-        req = urllib2.Reques(url, messageJsonStr, {'Content-Type': 'application/json'})
+        req = urllib2.Request(url, messageJsonStr, {'Content-Type': 'application/json'})
 
     else:
         url = "https://slack.com/api/chat.postMessage"
@@ -929,5 +929,7 @@ def slackMessage(slackAPIHandle, slackToken, slackChannel, slackText):
         req = urllib2.Request(url, data)
 
     resp = urllib2.urlopen(req)
+    if resp.getcode() != 200:
+        raise IOError("Unable to contact slack channel")
 
 
